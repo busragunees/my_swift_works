@@ -685,6 +685,7 @@ class Arac {
     init(renk:String, vites:String) {
         self.renk = renk
         self.vites = vites
+        print("Arac init() çalıştı")
     }
 }
 
@@ -713,6 +714,111 @@ var arac = Arac(renk: "Kırmızı", vites: "Manuel")
 
 
 //INHERITANCE EXAMPLE:
+
+/*class Ev{
+    var pencereSayisi:Int?
+    
+    init(pencereSayisi:Int) {
+        self.pencereSayisi = pencereSayisi
+    }
+}
+
+class Saray:Ev{
+    var kuleSayisi:Int?
+    
+    init(kuleSayisi:Int, pencereSayisi:Int) {
+        self.kuleSayisi = kuleSayisi
+        super.init(pencereSayisi:pencereSayisi)
+    }
+}
+
+class Villa:Ev{
+    var garajVarmi:Bool?
+    
+    init(garajVarmi:Bool, pencereSayisi:Int) {
+        self.garajVarmi = garajVarmi
+        super.init(pencereSayisi: pencereSayisi)
+    }
+}
+
+var topkapiSarayi = Saray(kuleSayisi: 5, pencereSayisi: 30)
+var bogazVilla = Villa(garajVarmi: true, pencereSayisi: 10)
+
+print(topkapiSarayi.kuleSayisi!)
+print(topkapiSarayi.pencereSayisi!)
+*/
+
+
+//Constructor - Kalıtım İlişkisi:
+
+//constructorlar oop oldugu zaman yani inheritance oldugunda bir üstü öncelikli olacak sekilde calısır. Hiyerarşik olarak.
+
+
+
+
+//--------------- OVERRIDING :
+
+class Hayvan{
+    func sesCikar(){
+        print("sesim yok")
+    }
+}
+
+class Memeli:Hayvan{
+    
+}
+
+class Kedi:Memeli{
+    override func sesCikar() {
+        print("Miyavv")
+    }
+}
+
+class Kopekk:Memeli{
+    override func sesCikar() {
+        print("Hav havv")
+    }
+}
+
+var hayvan = Hayvan()
+hayvan.sesCikar()
+
+var memeli = Memeli()  //override ettiği metod yok o yuzden hayvan sınıfı calıstı.
+memeli.sesCikar()
+
+var kedi = Kedi() //override ettiği metod var kendi metodunu calıstırdı.
+kedi.sesCikar()
+
+
+
+
+
+// ----------POLYMORPHISM:
+
+
+//SUPERCLASS GİBİ GÖZÜKÜP AMA SUBCLASS GİBİ CALISIR.
+
+
+var hayvan1:Hayvan = Kopekk()
+hayvan1.sesCikar()
+
+
+//--------DOWNCASTING - UPCASTING:
+
+/*
+ 
+ is: bu mu ?
+ 
+ as: (upcasting) bir tipi baska bir tipe dönüştürmek için kullanılır.
+ 
+ as!: Tipi baska bir tipe dönüştürürken hata varsa hata yoksa değeri dönüştürür.
+ 
+ as?:dönüşüm sırasında optional geliyorsa. basarısız olursa nil döner olmazsa degeri dönüştürür. //bu daha kolay bir yapı.
+ 
+ ??: default deger atamak için.
+ 
+ */
+
 
 class Ev{
     var pencereSayisi:Int?
@@ -746,3 +852,62 @@ var bogazVilla = Villa(garajVarmi: true, pencereSayisi: 10)
 print(topkapiSarayi.kuleSayisi!)
 print(topkapiSarayi.pencereSayisi!)
 
+
+
+var saray = Saray(kuleSayisi: 2, pencereSayisi: 5)
+if saray is Saray{
+    print("Burası saraydır")
+}else{
+    print("Saray değildir.")
+}
+
+//Upcasting
+
+var ev1:Ev = Saray(kuleSayisi: 2, pencereSayisi: 10) as Ev
+
+//downcasting
+
+/* var ev2 = Ev(pencereSayisi: 40)
+var saray2:Saray = ev2 as! Saray
+
+var sarat3:Saray? = Ev(pencereSayisi: 5) as? Saray */
+
+
+
+
+//polymorphism Örnek:
+
+
+class Personel{
+    func iseAlindi(){
+        print("personel mutlu")
+    }
+}
+
+class Mudur:Personel{
+    func iseAl(p:Personel){ //burada personel sınıfını belirttiğimiz için müdürde işçi de öğrtmende personel sınıfında. genişletmiş olduk.
+        p.iseAlindi()
+    }
+    func terfiEttir(p:Personel){
+        
+}
+
+class Isci:Personel{
+    
+}
+
+class Ogretmen:Personel{
+    func maasArttir(){
+        print("maaş arttı, öğretmen mutlu.")
+    }
+}
+
+var ogretmen:Personel = Ogretmen()
+var isci:Personel = Isci()
+
+var mudur = Mudur()
+mudur.iseAl(p:ogretmen)
+mudur.iseAl(p:isci)
+
+
+//---------EXTENCION
